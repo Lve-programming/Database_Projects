@@ -1,3 +1,32 @@
+ <?php
+ $n_error="";
+ $e_error="";
+$result_text="";
+if (isset($_POST['news'])) {
+    if (empty($_POST['name_news'])) {
+        $n_error="نام نمیتواند خالی باشد";
+    }elseif (empty($_POST['email_news'])) {
+        $e_error="ایمیل نمیتواند خالی باشد";
+    }else {
+        try {   
+            $name=$_POST['name_news'];
+            $email=$_POST['email_news'];
+           $query=$conn->prepare("INSERT INTO news (name,email)values(:name,:email)");
+           $result=$query->execute(["name"=>$name,"email"=>$email]);
+           if ($result) {
+               $result_text="تبریک شما عضو خبرنامه شدید";
+           }
+        } catch (Exception $e) {
+            if ($e->getCode() == "23000") {
+                $result_text="این ایمیل قبلا عضو شده است";
+            }
+                    
+           }
+       }
+    }
+?>
+ 
+ 
  <div class="col-lg-4">
                             <!-- Sesrch Section -->
                             <div class="card">
@@ -54,32 +83,53 @@
                                 <div class="card-body">
                                     <p class="fw-bold fs-6">عضویت در خبرنامه</p>
 
-                                    <form>
+                                    <form name="news" method="post">
                                         <div class="mb-3">
                                             <label class="form-label"
                                                 >نام</label
                                             >
                                             <input
+                                            name="name_news"
                                                 type="text"
                                                 class="form-control"
                                             />
                                         </div>
+                                        <?php if (strlen($n_error)>0) {
+                                                ?>
+                                            <p class="alert alert-danger">
+                                                <?php  echo $n_error;?>
+                                            </p>
+                                            <?php }?>
                                         <div class="mb-3">
                                             <label class="form-label"
                                                 >ایمیل</label
                                             >
                                             <input
+                                            name="email_news"
                                                 type="email"
                                                 class="form-control"
-                                            />
-                                        </div>
+                                            /> </div>
+                                            <?php if (strlen($e_error)>0) {
+                                                ?>
+                                            <p class="alert alert-danger">
+                                                <?php  echo $e_error;?>
+                                            </p>
+                                            <?php }?>
+                                       
                                         <div class="d-grid gap-2">
                                             <button
+                                            name="news"
                                                 type="submit"
                                                 class="btn btn-secondary"
                                             >
                                                 ارسال
                                             </button>
+                                            <?php if (strlen($result_text)>0) {
+                                                ?>
+                                            <p class="alert alert-info">
+                                                <?php  echo $result_text;?>
+                                            </p>
+                                            <?php }?>
                                         </div>
                                     </form>
                                 </div>

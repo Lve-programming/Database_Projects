@@ -50,7 +50,7 @@ $row = $stmt->fetchAll();
                 <div class="row g-3">
                     <div class="col-sm-6">
                         <div class="card">
-                            <img src="./assets/images/6.jpg" class="card-img-top" alt="post-image" />
+                            <img src="./assets/images/products/<?php echo $pro['img']; ?>" class="card-img-top" alt="post-image" />
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="card-title fw-bold">

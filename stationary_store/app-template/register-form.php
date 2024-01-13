@@ -15,7 +15,7 @@
         </div>
         <div class="form-group">
           <label for="mobile">شماره تماس:</label>
-          <input type="password" id="mobile" name="mobile">
+          <input type="text" id="mobile" name="mobile">
         </div>
         <div class="form-group">
           <label for="password"> گذرواژه :</label>
